@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import IconKrestick from "./Krestik";
 
-const Modal = () => {
+const Modal = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef(null);
@@ -45,6 +46,12 @@ const Modal = () => {
     };
   }, [isOpen]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted");
+    onClose();
+  };
+
   return (
     <div>
       <button
@@ -71,22 +78,27 @@ const Modal = () => {
                 onClick={closeModal}
                 className="text-white font-bold text-2xl hover:text-gray-700 rounded-full absolute top-5 right-5"
               >
-                X
+                <IconKrestick />
               </button>
               <h2 className="text-white text-2xl font-bold mb-4">
                 Contact Form
               </h2>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div>
                   <input
                     type="text"
+                    required
+                    pattern="^[a-zA-Z]+$"
+                    er
                     placeholder="Your Name"
-                    className="w-full rounded-md mb-4 h-10 pl-2 focus:placeholder-transparent"
+                    className="w-full rounded-md mb-4 h-10 pl-2 focus:placeholder-transparent invalid:animate-spin"
                   />
                 </div>
                 <div>
                   <input
                     type="email"
+                    required
+                    minLength={10}
                     placeholder="Your Email"
                     className="w-full rounded-md h-10 mb-4 pl-2 focus:placeholder-transparent"
                   />
